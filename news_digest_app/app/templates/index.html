@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ title }}</title>
+    <style>
+      body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 0; background: #0b1020; color: #eef2ff; }
+      a { color: #a5b4fc; text-decoration: none; }
+      a:hover { text-decoration: underline; }
+      .wrap { max-width: 1040px; margin: 0 auto; padding: 28px 18px 60px; }
+      .top { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
+      .top h1 { margin: 0; font-size: 20px; letter-spacing: 0.2px; }
+      .muted { color: #c7d2fe; opacity: 0.9; font-size: 13px; }
+      .card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 16px; margin-top: 14px; }
+      .cat { display: grid; gap: 10px; }
+      .cat h2 { margin: 0; font-size: 16px; }
+      .summary { color: #e0e7ff; font-size: 14px; line-height: 1.35; }
+      .item { padding: 10px 0; border-top: 1px solid rgba(255,255,255,0.08); }
+      .item:first-child { border-top: none; }
+      .item-title { font-weight: 600; }
+      .item-meta { font-size: 12px; color: #c7d2fe; margin-top: 3px; }
+      .item-summary { font-size: 13px; color: #eef2ff; opacity: 0.95; margin-top: 6px; line-height: 1.35; }
+      .actions { display: flex; gap: 10px; align-items: center; }
+      button { background: #4f46e5; border: 0; color: white; padding: 9px 12px; border-radius: 10px; cursor: pointer; font-weight: 600; }
+      button:hover { background: #4338ca; }
+      .pill { display:inline-block; font-size: 12px; color: #c7d2fe; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); padding: 5px 8px; border-radius: 999px; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="top">
+        <h1>{{ title }}</h1>
+        <div class="actions">
+          <a class="pill" href="/digests">Past digests</a>
+          <form action="/admin/run" method="post">
+            <button type="submit">Generate now</button>
+          </form>
+        </div>
+      </div>
+
+      {% if not digest %}
+        <div class="card">
+          <div class="muted">No digest stored yet.</div>
+          <div style="height: 10px"></div>
+          <form action="/admin/run" method="post">
+            <button type="submit">Generate today’s digest</button>
+          </form>
+        </div>
+      {% else %}
+        <div class="card">
+          <div class="muted">
+            Date: <b>{{ digest.date }}</b> · Generated: {{ digest.created_at }} · Lookback: {{ digest.lookback_hours }}h
+          </div>
+          {% if digest.errors and digest.errors|length > 0 %}
+            <div style="height: 10px"></div>
+            <div class="muted">Warnings (non-fatal): {{ digest.errors|length }}</div>
+          {% endif %}
+        </div>
+
+        {% for cat in digest.categories %}
+          <div class="card cat">
+            <h2>{{ cat.title }}</h2>
+            {% if cat.summary %}
+              <div class="summary">{{ cat.summary }}</div>
+            {% endif %}
+
+            {% for it in cat.items %}
+              <div class="item">
+                <div class="item-title">
+                  <a href="{{ it.url }}" target="_blank" rel="noreferrer noopener">{{ it.title }}</a>
+                </div>
+                <div class="item-meta">
+                  {{ it.source }}{% if it.published_at %} · {{ it.published_at }}{% endif %}
+                </div>
+                {% if it.summary %}
+                  <div class="item-summary">{{ it.summary }}</div>
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </body>
+</html>
+
