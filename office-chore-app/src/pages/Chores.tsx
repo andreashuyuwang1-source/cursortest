@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Check, Pencil, Plus, Trash2 } from 'lucide-react'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
@@ -89,12 +89,6 @@ function ChoreFormModal({
   onSave: (next: Chore) => void
 }) {
   const [draft, setDraft] = useState<ChoreDraft>(() => toDraft(initial))
-
-  // Reset draft on open / when switching chores.
-  useEffect(() => {
-    if (!open) return
-    setDraft(toDraft(initial))
-  }, [open, initial?.id])
 
   const isEdit = Boolean(initial)
   const title = isEdit ? 'Edit chore' : 'New chore'
@@ -245,6 +239,7 @@ export function ChoresPage({
   onComplete: (id: UUID) => void
 }) {
   const [modalOpen, setModalOpen] = useState(false)
+  const [modalKey, setModalKey] = useState(0)
   const [editing, setEditing] = useState<Chore | undefined>(undefined)
 
   const [q, setQ] = useState('')
@@ -292,10 +287,12 @@ export function ChoresPage({
 
   const openNew = () => {
     setEditing(undefined)
+    setModalKey((k) => k + 1)
     setModalOpen(true)
   }
   const openEdit = (c: Chore) => {
     setEditing(c)
+    setModalKey((k) => k + 1)
     setModalOpen(true)
   }
 
@@ -471,6 +468,7 @@ export function ChoresPage({
       </Card>
 
       <ChoreFormModal
+        key={modalKey}
         open={modalOpen}
         people={people}
         initial={editing}

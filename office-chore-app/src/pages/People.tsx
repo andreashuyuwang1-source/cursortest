@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Plus, UserX, UserCheck, Pencil } from 'lucide-react'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
@@ -20,11 +20,6 @@ function PersonModal({
   onSave: (p: Person) => void
 }) {
   const [name, setName] = useState(initial?.name ?? '')
-
-  useEffect(() => {
-    if (!open) return
-    setName(initial?.name ?? '')
-  }, [open, initial?.id])
 
   const canSave = name.trim().length > 0
 
@@ -80,6 +75,7 @@ export function PeoplePage({
   onChangePeople: (next: Person[]) => void
 }) {
   const [modalOpen, setModalOpen] = useState(false)
+  const [modalKey, setModalKey] = useState(0)
   const [editing, setEditing] = useState<Person | undefined>(undefined)
 
   const active = useMemo(() => people.filter((p) => p.isActive), [people])
@@ -87,10 +83,12 @@ export function PeoplePage({
 
   const openNew = () => {
     setEditing(undefined)
+    setModalKey((k) => k + 1)
     setModalOpen(true)
   }
   const openEdit = (p: Person) => {
     setEditing(p)
+    setModalKey((k) => k + 1)
     setModalOpen(true)
   }
 
@@ -182,6 +180,7 @@ export function PeoplePage({
       </Card>
 
       <PersonModal
+        key={modalKey}
         open={modalOpen}
         initial={editing}
         onClose={() => setModalOpen(false)}
