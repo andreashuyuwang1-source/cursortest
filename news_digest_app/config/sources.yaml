@@ -1,0 +1,47 @@
+sources:
+  - name: "NYTimes"
+    homepage: "https://www.nytimes.com"
+    feeds:
+      - url: "https://rss.nytimes.com/services/xml/rss/nyt/World.xml"
+        category_hint: "global_politics"
+      - url: "https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml"
+        category_hint: "technology"
+      - url: "https://rss.nytimes.com/services/xml/rss/nyt/Business.xml"
+        category_hint: "stock_market"
+
+  - name: "Forbes"
+    homepage: "https://www.forbes.com"
+    feeds:
+      - url: "https://www.forbes.com/innovation/feed/"
+        category_hint: "technology"
+      - url: "https://www.forbes.com/finance/feed/"
+        category_hint: "stock_market"
+      - url: "https://www.forbes.com/business/feed/"
+        category_hint: null
+
+  - name: "TechCrunch"
+    homepage: "https://techcrunch.com"
+    feeds:
+      - url: "https://techcrunch.com/feed/"
+        category_hint: "technology"
+      - url: "https://techcrunch.com/tag/funding/feed/"
+        category_hint: "fundraising"
+
+  - name: "Wall Street Journal"
+    homepage: "https://www.wsj.com"
+    feeds:
+      - url: "https://feeds.a.dj.com/rss/RSSWorldNews.xml"
+        category_hint: "global_politics"
+      - url: "https://feeds.a.dj.com/rss/RSSMarketsMain.xml"
+        category_hint: "stock_market"
+
+  - name: "The Economist"
+    homepage: "https://www.economist.com"
+    feeds:
+      - url: "https://www.economist.com/international/rss.xml"
+        category_hint: "global_politics"
+      - url: "https://www.economist.com/science-and-technology/rss.xml"
+        category_hint: "technology"
+      - url: "https://www.economist.com/finance-and-economics/rss.xml"
+        category_hint: "stock_market"
+

@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ title }} · {{ digest.date }}</title>
+    <style>
+      body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 0; background: #0b1020; color: #eef2ff; }
+      a { color: #a5b4fc; text-decoration: none; }
+      a:hover { text-decoration: underline; }
+      .wrap { max-width: 1040px; margin: 0 auto; padding: 28px 18px 60px; }
+      .top { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
+      .muted { color: #c7d2fe; opacity: 0.9; font-size: 13px; }
+      .card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 16px; margin-top: 14px; }
+      .cat { display: grid; gap: 10px; }
+      .cat h2 { margin: 0; font-size: 16px; }
+      .summary { color: #e0e7ff; font-size: 14px; line-height: 1.35; }
+      .item { padding: 10px 0; border-top: 1px solid rgba(255,255,255,0.08); }
+      .item:first-child { border-top: none; }
+      .item-title { font-weight: 600; }
+      .item-meta { font-size: 12px; color: #c7d2fe; margin-top: 3px; }
+      .item-summary { font-size: 13px; color: #eef2ff; opacity: 0.95; margin-top: 6px; line-height: 1.35; }
+      .pill { display:inline-block; font-size: 12px; color: #c7d2fe; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); padding: 5px 8px; border-radius: 999px; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="top">
+        <h1 style="margin:0; font-size: 20px;">Digest for {{ digest.date }}</h1>
+        <a class="pill" href="/digests">Back</a>
+      </div>
+
+      <div class="card">
+        <div class="muted">
+          Generated: {{ digest.created_at }} · Lookback: {{ digest.lookback_hours }}h
+        </div>
+      </div>
+
+      {% for cat in digest.categories %}
+        <div class="card cat">
+          <h2>{{ cat.title }}</h2>
+          {% if cat.summary %}
+            <div class="summary">{{ cat.summary }}</div>
+          {% endif %}
+          {% for it in cat.items %}
+            <div class="item">
+              <div class="item-title">
+                <a href="{{ it.url }}" target="_blank" rel="noreferrer noopener">{{ it.title }}</a>
+              </div>
+              <div class="item-meta">{{ it.source }}</div>
+              {% if it.summary %}
+                <div class="item-summary">{{ it.summary }}</div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+    </div>
+  </body>
+</html>
+

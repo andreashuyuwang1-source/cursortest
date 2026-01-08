@@ -1,0 +1,16 @@
+app:
+  title: "Daily News Digest"
+
+digest:
+  lookback_hours: 36
+  max_items_per_category: 10
+  key_links_per_category: 5
+
+fetch:
+  timeout_seconds: 20
+  user_agent: "daily-news-digest/1.0 (+local)"
+  max_concurrent_requests: 8
+
+storage:
+  sqlite_path: "data/digests.sqlite3"
+
