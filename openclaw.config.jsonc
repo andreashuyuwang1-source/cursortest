@@ -1,0 +1,50 @@
+// openclaw.config.jsonc
+// OpenClaw configuration template – Telegram channel
+//
+// Copy this file to ~/.config/openclaw/openclaw.config.jsonc
+// (or the path pointed to by $OPENCLAW_CONFIG_DIR)
+// and fill in the values marked with YOUR_*.
+//
+// Full schema reference: https://docs.openclaw.ai/configuration
+{
+  // ── Account / model ──────────────────────────────────────────────────────────
+  // "model": "claude-3-5-sonnet-latest",   // default model to use
+  // "apiKey": "YOUR_AI_PROVIDER_API_KEY",  // set here or via environment variable
+
+  // ── Channels ─────────────────────────────────────────────────────────────────
+  "channels": {
+    "telegram": {
+      // Required: paste the token from @BotFather
+      "enabled": true,
+      "botToken": "YOUR_TELEGRAM_BOT_TOKEN_HERE",
+
+      // Who may send direct messages to this bot.
+      // "pairing" (default) – the user must first send /start and you approve
+      //                        them with `openclaw pairing approve telegram <CODE>`
+      // "open"              – anyone who finds the bot can use it (not recommended)
+      "dmPolicy": "pairing",
+
+      // Group chat policy.
+      // "*" matches every group; set requireMention to avoid the bot
+      // responding to every message in busy chats.
+      "groups": {
+        "*": {
+          // Allowed values: "open" | "allowlist" | "disabled"
+          "groupPolicy": "allowlist",
+          // Only respond when someone explicitly @-mentions the bot
+          "requireMention": true
+        }
+      },
+
+      // Optional: restrict access to specific Telegram user IDs (numeric).
+      // Leave as an empty array to rely solely on the pairing flow.
+      "allowList": []
+    }
+  },
+
+  // ── Gateway ──────────────────────────────────────────────────────────────────
+  "gateway": {
+    // Port the gateway listens on locally (does not need to be public)
+    "port": 3000
+  }
+}
