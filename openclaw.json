@@ -2,7 +2,7 @@
   "channels": {
     "telegram": {
       "enabled": true,
-      "botToken": "123:abc",
+      "botToken": "8289700761:AAFpCfV99snhq-KSgU0lR_cY1XPtOOPVoC0",
       "dmPolicy": "pairing",
       "groups": { "*": { "requireMention": true } }
     }
