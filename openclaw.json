@@ -1,0 +1,10 @@
+{
+  "channels": {
+    "telegram": {
+      "enabled": true,
+      "botToken": "123:abc",
+      "dmPolicy": "pairing",
+      "groups": { "*": { "requireMention": true } }
+    }
+  }
+}
